@@ -126,3 +126,22 @@ def index (request):
     template = loader.get_template("mangalib/index.html")
     return HttpResponse(template.render(context, request))
 ```
+- Ajout de la varibale de template dans le fichier html.
+```python
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes mangas</title>
+</head>
+<body>
+    <h1>
+        Bienvenue sur Mangalib !
+    </h1>
+    <p>
+        {{message}}
+    </p>
+</body>
+</html>
+```
