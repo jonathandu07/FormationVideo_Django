@@ -238,3 +238,7 @@ ici il y a 250 mot (w) qui seront générés.
 <h2>Importation d'un fichier html extérieur</h2>
 {% include "./import.html" %}
 ```
+
+
+**La balise `include` :**
+- Voici comment faire du routage.
