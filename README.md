@@ -224,10 +224,17 @@ ici il y a 250 mot (w) qui seront générés.
 ```
 
 **La balise `date` :**
+
 - La balise date à un formatage complexe donc se fier à la documentation
+
 ```html
 <h2>La balise date</h2>
 {% now 'd m y H:i:s' %}
 ```
 
-
+**La balise `Include` :**
+- Ne pas oublier le `./`
+```html
+<h2>Importation d'un fichier html extérieur</h2>
+{% include "./import.html" %}
+```

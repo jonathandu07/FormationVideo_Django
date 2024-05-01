@@ -27,12 +27,12 @@
         Texte Lorem
     </h2>
     <p>
-        {% lorem 250 w %}
+        {% lorem 8 w %}
     </p>
 
     <h2>Texte Lorem aléatoire</h2>
     <p>
-        {% lorem 250 w random %}
+        {% lorem 8 w random %}
     </p>
 
     {% comment %}
@@ -45,6 +45,9 @@
     <p>{% now 'l' %}</p>
     <p>{% now 'F' %}</p>
 
+
+    <h2>Importation d'un fichier html extérieur</h2>
+    {% include "./import.html" %}
 </body>
 
 </html>
