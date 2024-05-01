@@ -223,4 +223,11 @@ ici il y a 250 mot (w) qui seront générés.
 {% debug %}
 ```
 
+**La balise `date` :**
+- La balise date à un formatage complexe donc se fier à la documentation
+```html
+<h2>La balise date</h2>
+{% now 'd m y H:i:s' %}
+```
+
 
