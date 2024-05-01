@@ -32,8 +32,16 @@
 
     <h2>Texte Lorem aléatoire</h2>
     <p>
-        {% lorem 250 p random %}
+        {% lorem 250 w random %}
     </p>
+
+    {% comment %}
+    <h2>Voici la balise Debug</h2>
+    {% debug %}
+    {% endcomment %}
+
+    <h2>La balise date</h2>
+    {% now 'd m y H:i:s' %}
 </body>
 
 </html>
