@@ -233,12 +233,23 @@ ici il y a 250 mot (w) qui seront générés.
 ```
 
 **La balise `Include` :**
+
 - Ne pas oublier le `./`
+
 ```html
 <h2>Importation d'un fichier html extérieur</h2>
 {% include "./import.html" %}
 ```
 
-
 **La balise `include` :**
+
 - Voici comment faire du routage.
+
+```html
+    <button>
+        <a href="{% url  'indexMangalib' %}">
+            <p>Découvir la page manga </p>
+        </a>
+    </button>
+</body>
+```
