@@ -196,3 +196,15 @@ STATICFILES_DIRS = [
     <p>Voici du code qui sera ignoré grâce à la balise "comment"</p>
 {% endcomment %}
 ```
+
+**La balise `Lorem` :**
+- Permet de générer du text Lorem ipsum.
+```html
+{% lorem 250 w %}
+```
+ici il y a 250 mot (w) qui seront générés.
+
+```html
+{% lorem 250 p random %}
+```
+- Ci-dessus il est possible de voir que je peux utiliser la lettre `p` pour demander un paragraphe et également `random` pour utiliser une fonction aléatoire.

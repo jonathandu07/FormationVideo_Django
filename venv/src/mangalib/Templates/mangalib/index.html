@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}">
     <link rel="stylesheet" href="{% static '/css/global.css' %}">
 </head>
+
 <body>
     <h1>
         Bienvenue sur Mangalib !
@@ -16,10 +18,22 @@
         {{message}}
     </p>
 
-    
+
     {% comment %}
-        <p>Voici du code qui sera ignoré grâce à la balise "comment"</p>
+    <p>Voici du code qui sera ignoré grâce à la balise "comment"</p>
     {% endcomment %}
-        
+
+    <h2>
+        Texte Lorem
+    </h2>
+    <p>
+        {% lorem 250 w %}
+    </p>
+
+    <h2>Texte Lorem aléatoire</h2>
+    <p>
+        {% lorem 250 p random %}
+    </p>
 </body>
+
 </html>
