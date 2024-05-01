@@ -182,3 +182,17 @@ STATICFILES_DIRS = [
     os.path.join('main/static')
 ]
 ```
+
+
+---
+
+
+## Balises et filtres
+
+**La balise `comment` :**
+- Cette balise sert à ne pas afficher sur la page ce qu'il y a entere les balises.
+```html
+{% comment %}
+    <p>Voici du code qui sera ignoré grâce à la balise "comment"</p>
+{% endcomment %}
+```
