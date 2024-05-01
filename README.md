@@ -241,7 +241,7 @@ ici il y a 250 mot (w) qui seront générés.
 {% include "./import.html" %}
 ```
 
-**La balise `include` :**
+**La balise `url` :**
 
 - Voici comment faire du routage.
 
@@ -252,4 +252,24 @@ ici il y a 250 mot (w) qui seront générés.
         </a>
     </button>
 </body>
+```
+
+**La balise `if` :**
+
+```html
+<h2>Les balises condtionelles</h2>
+{% if numberNews > 0 %}
+<p>Des news sont disponibles !</p>
+{% else %} {{numberNews}} {% endif %}
+```
+
+**La balise `for` :**
+
+```html
+<h2>Les boucles</h2>
+{% for u in UserList %}
+<p>{{u}}</p>
+{% empty %}
+<p>Pas d'utilisateurs...</p>
+{% endfor %}
 ```

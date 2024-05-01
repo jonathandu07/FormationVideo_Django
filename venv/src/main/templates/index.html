@@ -13,6 +13,22 @@
             <p>Découvir la page manga </p>
         </a>
     </button>
+
+    <h2>Les balises condtionelles</h2>
+    {% if numberNews > 0 %}
+    <p>Des news sont disponibles !</p>
+    {% else %}
+    {{numberNews}}
+    {% endif %}
+
+    <h2>
+        Les boucles
+    </h2>
+    {% for u in UserList %}
+    <p>{{u}}</p>
+    {% empty %}
+    <p>Pas d'utilisateurs...</p>
+    {% endfor %}
 </body>
 
 </html>
