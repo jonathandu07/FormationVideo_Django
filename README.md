@@ -145,3 +145,40 @@ def index (request):
 </body>
 </html>
 ```
+
+19. **Ajout des fichiers statics**
+```html
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes mangas</title>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}">
+</head>
+<body>
+    <h1>
+        Bienvenue sur Mangalib !
+    </h1>
+    <p>
+        {{message}}
+    </p>
+</body>
+</html>
+```
+- à la racine de chaque application, comme pour templates, créer un fichier static qui sert pour le css, le scss ou le JS.
+
+20. **Création d'un fichier stactic global :**
+- Créer un fichier stactic dans l'application du projet, c'est à dire `main`.
+- Aller dans le fichier `settings.py` et j'immorte le module **OS** et j'ajoute **STATICFILES_DIRS** comme suit :
+```python
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+STATIC_URL = 'static/'
+#  J'aoute d'autres chemins pour les fichiers statics
+STATICFILES_DIRS = [
+    os.path.join('main/static')
+]
+```
