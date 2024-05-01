@@ -127,7 +127,7 @@ def index (request):
     return HttpResponse(template.render(context, request))
 ```
 - Ajout de la varibale de template dans le fichier html.
-```python
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
