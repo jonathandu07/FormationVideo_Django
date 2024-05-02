@@ -1,4 +1,5 @@
 {% load static %}
+{% load customtags %}
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -49,7 +50,10 @@
     <h2>Importation d'un fichier html extérieur</h2>
     {% include "./import.html" %}
 
-    
+    <h2>Filtre personnalisé</h2>
+    <p>
+        {{message | first_char }}
+    </p>
 </body>
 
 </html>

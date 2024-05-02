@@ -273,3 +273,43 @@ ici il y a 250 mot (w) qui seront générés.
 <p>Pas d'utilisateurs...</p>
 {% endfor %}
 ```
+
+### Création de balises
+
+**Récupérer le premier caractère d'une chaines de carractères**
+
+```python
+from django import template
+from django.template.defaultfilters import stringfilter
+
+register = template.Library()
+
+@register.filter
+@stringfilter
+def first_char(value):
+    return value[0]
+```
+
+- Créer un dossier dans l'application et le nommer `templatetags`.
+- Modifier le fichier html comme suit :
+
+```html
+{% load static %} 
+{% load customtags %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes mangas</title>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/global.css' %}" />
+  </head>
+
+  <body>
+    <h2>Filtre personnalisé</h2>
+    <p>{{message | first_char }}</p>
+  </body>
+</html>
+```
+- `{% load customtags %}` est primordial pour charger son fichier python.
