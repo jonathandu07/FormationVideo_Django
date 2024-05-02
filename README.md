@@ -294,8 +294,7 @@ def first_char(value):
 - Modifier le fichier html comme suit :
 
 ```html
-{% load static %} 
-{% load customtags %}
+{% load static %} {% load customtags %}
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -312,4 +311,33 @@ def first_char(value):
   </body>
 </html>
 ```
+
 - `{% load customtags %}` est primordial pour charger son fichier python.
+  Il est possible également de renommer les fonctions avec les décorrateurs :
+
+````python
+@register.filter(name = "longueur_de_ça")
+def checkstrlen(value, size):
+    return len(value) == size
+    ```
+````
+- Voici le html :
+```html
+{% load static %} {% load customtags %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes mangas</title>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/global.css' %}" />
+  </head>
+
+  <body>
+    <h2>Filtre compteur de carractères</h2>
+    <p>
+        {{message | longueur_de_ça:5 }}
+    </p>
+  </body>
+</html>
