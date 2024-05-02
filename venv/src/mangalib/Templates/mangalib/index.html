@@ -1,5 +1,6 @@
 {% load static %}
 {% load customtags %}
+{% load customBalises %}
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -59,6 +60,9 @@
     <p>
         {{message | longueur_de_ça:5 }}
     </p>
+
+    <h2>Balise personnalisée</h2>
+    <p>{% hello_world %}</p>
 </body>
 
 </html>

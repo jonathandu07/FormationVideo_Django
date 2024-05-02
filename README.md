@@ -274,7 +274,7 @@ ici il y a 250 mot (w) qui seront générés.
 {% endfor %}
 ```
 
-### Création de balises
+### Création de balises et de filtres
 
 **Récupérer le premier caractère d'une chaines de carractères**
 
@@ -321,7 +321,9 @@ def checkstrlen(value, size):
     return len(value) == size
     ```
 ````
+
 - Voici le html :
+
 ```html
 {% load static %} {% load customtags %}
 <!DOCTYPE html>
@@ -336,8 +338,41 @@ def checkstrlen(value, size):
 
   <body>
     <h2>Filtre compteur de carractères</h2>
-    <p>
-        {{message | longueur_de_ça:5 }}
-    </p>
+    <p>{{message | longueur_de_ça:5 }}</p>
   </body>
 </html>
+```
+
+**Balise personnalisé :**
+
+```python
+from django import template
+
+register = template.Library()
+
+@register.simple_tag
+def hello_world():
+    return "Hello, world!"
+
+```
+
+- Le coter HTML
+
+```html
+{% load static %} {% load customtags %} {% load customBalises %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes mangas</title>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/global.css' %}" />
+  </head>
+
+  <body>
+    <h2>Balise personnalisée</h2>
+    <p>{% hello_world %}</p>
+  </body>
+</html>
+```
