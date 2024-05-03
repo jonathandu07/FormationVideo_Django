@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{book.title}}</title>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/css/global.css' %}">
+</head>
+<body>
+    <h1>{{book.title}}</h1>
+    <p>Quantité : {{book.quantity}}</p>
+    <p>Auteur : {{book.author.name}}</p>
+    <p>Id du livre : {{book.book_id}}</p>
+    <p><a href="{% url 'mangalib:index' %}">&laquo; Revenir à la liste des livres</a></p>
+</body>
+</html>

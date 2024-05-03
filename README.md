@@ -487,3 +487,28 @@ def index (request):
 
 </html>
 ```
+4. Création d'une page par article :
+```python
+from django.urls import path
+from . import views
+
+# Je crréais une variable pour mon app
+app_name = "mangalib"
+urlpatterns = [
+    # Show est la méthode qui est dans views.py
+    path("<int:book_id>/", views.show, name="show"), # manga/<id>
+]
+```
+- Dans le fichier **urls.py**
+5. Modifier le fichier **views.py** :
+```python
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+#  Ne pas oublier d'immporter notre modèle
+from .models import Book
+# Create your views here.
+def show(request, book_id):
+    context = {"book": get_object_or_404(Book, pk = book_id)}
+    return render(request, "mangalib/show.html", context)
+```
+- Je créais une méth
