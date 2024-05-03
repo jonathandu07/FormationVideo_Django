@@ -376,3 +376,114 @@ def hello_world():
   </body>
 </html>
 ```
+
+## Les modèles
+
+Gestion de bases de données.
+
+```python
+from django.db import models
+
+# Create your models here.
+class Author(models.Model):
+    name = models.CharField(max_length=64, unique = True)
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=32, unique = True)
+    quantity = models.IntegerField(default=1)
+    # Première relation
+    author = models.ForeignKey(Author, on_delete=DO_NOTHING)
+
+```
+
+- Je suis allé dans le fichier `models.py` et je l'ai rempli avec ce qu'il y a ci-dessus.
+  Pour faire une migration : `python manage.py makemigrations mangalib`
+  **résultat dans l'invité de commande :**
+
+```powershell
+PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src> python manage.py makemigrations mangalib
+Migrations for 'mangalib':
+  mangalib\migrations\0001_initial.py
+    - Create model Author
+    - Create model Book
+PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src>
+```
+Pour d'autre application remplacer `managlib` par le nom de l'application en question.
+
+**Pour vérifier les requètes :**
+`python manage.py sqlmigrate mangalib 0001`
+Le **0001** représente le numéro de la migration.
+```powershell
+PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src> python manage.py sqlmigrate mangalib 0001    
+BEGIN;
+--
+-- Create model Author
+--
+CREATE TABLE "mangalib_author" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(64) NOT NULL UNIQUE);
+--
+-- Create model Book
+--
+CREATE TABLE "mangalib_book" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(32) NOT NULL UNIQUE, "quantity" integer NOT NULL, "author_id" bigint NOT NULL REFERENCES "mangalib_author" ("id") DEFERRABLE INITIALLY DEFERRED);
+CREATE INDEX "mangalib_book_author_id_bc892452" ON "mangalib_book" ("author_id");
+COMMIT;
+PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src> 
+```
+le dossier `migrations` vient d'apparaitre dans le dossier de l'application.
+
+
+**Pour effectuer la migration :**
+`python manage.py migrate`
+```powershell
+PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src> python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, mangalib, sessions
+Running migrations:
+  Applying mangalib.0001_initial... OK
+```
+
+**Pour afficher les éléments d'une table :**
+- Dans le fichier `views.py` :
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+#  Ne pas oublier d'immporter notre modèle
+from .models import Book
+# Create your views here.
+def index (request):
+    # je souhaite récupérer tous ce qu'il y a dans la table livre
+    context = {"books": Book.objects.all()}
+    
+    return render(request, 'mangalib/index.html', context)
+```
+1. Importer le module `.models`
+2. faire une variable et lui attribuer tous les éléments d'une table.
+3. Renvoyer ses éléments en faisant comme suit :
+```html
+{% load static %}
+{% load customtags %}
+{% load customBalises %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes mangas</title>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/css/global.css' %}">
+</head>
+
+<body>
+    <h2>Liste des livre</h2>
+    <ul>
+        {% for book in books %}
+            <li>
+                {{book.title}}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
+```

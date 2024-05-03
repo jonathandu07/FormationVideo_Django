@@ -48,21 +48,19 @@
     <p>{% now 'F' %}</p>
 
 
-    <h2>Importation d'un fichier html extérieur</h2>
-    {% include "./import.html" %}
-
-    <h2>Filtre personnalisé</h2>
-    <p>
-        {{message | first_char }}
-    </p>
-
-    <h2>Filtre compteur de carractères</h2>
-    <p>
-        {{message | longueur_de_ça:5 }}
-    </p>
-
     <h2>Balise personnalisée</h2>
     <p>{% hello_world %}</p>
+
+    <p>-----------------------------------------------------------------------------------------------------------------</p>
+
+    <h2>Liste des livre</h2>
+    <ul>
+        {% for book in books %}
+            <li>
+                {{book.title}}
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 
 </html>
