@@ -511,4 +511,26 @@ def show(request, book_id):
     context = {"book": get_object_or_404(Book, pk = book_id)}
     return render(request, "mangalib/show.html", context)
 ```
-- Je créais une méth
+- Je créais une méthode **show** qui renvoie tout les éléments d'un objets livre sur la page **show**.
+6. Je créais un template pour la page **show**
+```html
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{book.title}}</title>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/css/global.css' %}">
+</head>
+<body>
+    <h1>{{book.title}}</h1>
+    <p>Quantité : {{book.quantity}}</p>
+    <p>Auteur : {{book.author.name}}</p>
+    <p>Id du livre : {{book.id}}</p>
+    <p><a href="{% url 'mangalib:index' %}">&laquo; Revenir à la liste des livres</a></p>
+</body>
+</html>
+```
