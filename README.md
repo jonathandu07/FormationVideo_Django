@@ -575,3 +575,23 @@ Permet de récupéer les livres dont la quantité est inférieur ou égale à 10
 - **SELECT * FROM mangalib_book WHERE title LIKE 'Éthique à Nicomaque%';** -> en django `"books": Book.objects.all().filter(title__startswith = "Éthique à Nicomaque")`
 Permet de récupéer les livres dont le titre commence par : **Éthique à Nicomaque**. `__startswith` signifie : **starts with**
 
+
+### La commande INSERT
+
+```python
+def add(request):
+    author = Author.objects.get(name="Virgil")
+    book = Book.objects.create(title = "De Republica", quantity =50 , author = author)
+    book.save()
+    return redirect("mangalib:index")
+```
+- Comment ajouter un élément en base de donnée mais sans utiliser de formulaire
+
+- **Modifier :**
+```python
+def edit (request):
+    book = Book.objects.get(title = "Etiam si omnes Ego non !")
+    book.title = "Meditationes"
+    book.save()
+    return redirect("mangalib:index")
+```

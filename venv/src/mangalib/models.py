@@ -11,3 +11,5 @@ class Book(models.Model):
     # Première relation 
     author = models.ForeignKey(Author, on_delete=models.DO_NOTHING)
     
+    
+    
