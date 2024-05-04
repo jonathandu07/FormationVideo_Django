@@ -556,3 +556,22 @@ Classe les titres par ordre non alphabétique (décroissant).
 
 - **SELECT * FROM mangalib_book LIMIT 5;** -> en django `"books": Book.objects.all()[:5]`
 Permet de récupéer les 5 premiers éléments d'une liste.
+
+- **SELECT * FROM mangalib_book WHERE author_id = 2;** -> en django `"books": Book.objects.all().filter(author_id = 2)`
+Permet de récupéer les livres dont l'id de l'auteur est 2, il s'agit de Virgile.
+
+- **SELECT * FROM mangalib_book WHERE quantity > 100;** -> en django `"books": Book.objects.all().filter(quantity__gt = 100)`
+Permet de récupéer les livres dont la quantité est supérieure à 100. `__gt` signifie : **greater than**
+
+- **`SELECT * FROM mangalib_book WHERE quantity < 100;`** -> en django `"books": Book.objects.all().filter(quantity__lt = 100)`
+Permet de récupéer les livres dont la quantité est inférieur à 100. `__lt` signifie : **less than**
+
+- **SELECT * FROM mangalib_book WHERE quantity >= 100;** -> en django `"books": Book.objects.all().filter(quantity__gte = 100)`
+Permet de récupéer les livres dont la quantité est supérieure ou égale à 100. `__gte` signifie : **greater than or equal to**
+
+- **`SELECT * FROM mangalib_book WHERE quantity <= 100;`** -> en django `"books": Book.objects.all().filter(quantity__lte = 100)`
+Permet de récupéer les livres dont la quantité est inférieur ou égale à 100. `__lte` signifie : **less than or equal to**
+
+- **SELECT * FROM mangalib_book WHERE title LIKE 'Éthique à Nicomaque%';** -> en django `"books": Book.objects.all().filter(title__startswith = "Éthique à Nicomaque")`
+Permet de récupéer les livres dont le titre commence par : **Éthique à Nicomaque**. `__startswith` signifie : **starts with**
+
