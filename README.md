@@ -377,6 +377,10 @@ def hello_world():
 </html>
 ```
 
+
+---
+
+
 ## Les modèles
 
 Gestion de bases de données.
@@ -534,3 +538,12 @@ def show(request, book_id):
 </body>
 </html>
 ```
+
+
+---
+
+
+## Les gestionnaires
+
+- **SELECT * FROM mangalib_book;** -> en django `"books": Book.objects.all()`
+il est aussi possible d'utiliser la méthode `get()` -> `book = Book.objects.get(title="Nom du Livre")`
