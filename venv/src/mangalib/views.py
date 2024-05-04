@@ -10,7 +10,7 @@ from .models import Book
 def index (request):
     # je souhaite récupérer tous ce qu'il y a dans la table livre
     context = {
-        "books": Book.objects.all()
+        "books": Book.objects.all().order_by("title")
         }
     
     return render(request, 'mangalib/index.html', context)

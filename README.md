@@ -547,3 +547,5 @@ def show(request, book_id):
 
 - **SELECT * FROM mangalib_book;** -> en django `"books": Book.objects.all()`
 il est aussi possible d'utiliser la méthode `get()` -> `book = Book.objects.get(title="Nom du Livre")`
+
+- **SELECT * FROM mangalib_book ORDER BY title;** -> en django `"books": Book.objects.all().order_by("title")`
