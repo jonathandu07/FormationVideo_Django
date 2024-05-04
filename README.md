@@ -549,3 +549,10 @@ def show(request, book_id):
 il est aussi possible d'utiliser la méthode `get()` -> `book = Book.objects.get(title="Nom du Livre")`
 
 - **SELECT * FROM mangalib_book ORDER BY title;** -> en django `"books": Book.objects.all().order_by("title")`
+Classe les titres par ordre alphabétique par défaut.
+
+- **SELECT * FROM mangalib_book ORDER BY title DESC;** -> en django `"books": Book.objects.all().order_by("-title")`
+Classe les titres par ordre non alphabétique (décroissant).
+
+- **SELECT * FROM mangalib_book LIMIT 5;** -> en django `"books": Book.objects.all()[:5]`
+Permet de récupéer les 5 premiers éléments d'une liste.

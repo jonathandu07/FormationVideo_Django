@@ -6,11 +6,13 @@ from .models import Book
 
 #  Les commandes SQL et leur équivalent Django
 # SELECT (en SQL) : all() ou get()
-#  ORDER BY (en SQL)
+# WHERE (en SQL) : filter()
+#  ORDER BY (en SQL) : order_by()
+#  LIMIT : [:N]
 def index (request):
     # je souhaite récupérer tous ce qu'il y a dans la table livre
     context = {
-        "books": Book.objects.all().order_by("title")
+        "books": Book.objects.all().filter(author_id = 2)
         }
     
     return render(request, 'mangalib/index.html', context)
