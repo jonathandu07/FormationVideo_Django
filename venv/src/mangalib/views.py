@@ -29,8 +29,13 @@ def add(request):
     book.save()
     return redirect("mangalib:index")
 
-def edit (request):
-    book = Book.objects.get(title = "Etiam si omnes Ego non !")
+def edit(request):
+    book = Book.objects.get(title = "Ce que tu veux")
     book.title = "Meditationes"
     book.save()
+    return redirect("mangalib:index")
+
+def remove(request):
+    book = Book.objects.get(title = "Ce que tu veux")
+    book.delete()
     return redirect("mangalib:index")

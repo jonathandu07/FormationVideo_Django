@@ -8,5 +8,6 @@ urlpatterns = [
     # Show est la méthode qui est dans views.py
     path("<int:book_id>/", views.show, name="show"), # manga/<id>
     path('ajouter-livre/', views.add, name="add"),
-    path('modifier-livre/', views.add, name="edit"),
+    path('modifier-livre/', views.edit, name="edit"),
+    path('supprimer-livre/', views.remove, name="delete"),
 ]

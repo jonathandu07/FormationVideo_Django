@@ -595,3 +595,53 @@ def edit (request):
     book.save()
     return redirect("mangalib:index")
 ```
+
+- **Supprimer :**
+```python
+def remove(request):
+    book = Book.objects.get(title = "Ce que tu veux")
+    book.delete()
+    return redirect("mangalib:index")
+```
+
+
+**Il est nécessaire de créer des chemins dans le fichiers views**
+```python
+from django.urls import path
+from . import views
+
+# Je crréais une variable pour mon app
+app_name = "mangalib"
+urlpatterns = [
+    path('', views.index, name='index'), # manga/
+    # Show est la méthode qui est dans views.py
+    path("<int:book_id>/", views.show, name="show"), # manga/<id>
+    path('ajouter-livre/', views.add, name="add"),
+    path('modifier-livre/', views.edit, name="edit"),
+    path('supprimer-livre/', views.remove, name="delete"),
+]
+```
+
+**Il faut aussi créer les liens dans le template**
+```html
+{% load static %}
+{% load customtags %}
+{% load customBalises %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes mangas</title>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}">
+    <link rel="stylesheet" href="{% static '/css/global.css' %}">
+</head>
+
+<body>
+    <p><a href="{% url 'mangalib:add' %}">ajouter un livre</a></p>
+    <p><a href="{% url 'mangalib:edit' %}">modifier un livre</a></p>
+    <p><a href="{% url 'mangalib:delete' %}">supprimer un livre</a></p>
+</body>
+</html>
+```
