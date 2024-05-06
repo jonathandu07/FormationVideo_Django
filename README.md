@@ -377,9 +377,7 @@ def hello_world():
 </html>
 ```
 
-
 ---
-
 
 ## Les modèles
 
@@ -413,13 +411,15 @@ Migrations for 'mangalib':
     - Create model Book
 PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src>
 ```
+
 Pour d'autre application remplacer `managlib` par le nom de l'application en question.
 
 **Pour vérifier les requètes :**
 `python manage.py sqlmigrate mangalib 0001`
 Le **0001** représente le numéro de la migration.
+
 ```powershell
-PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src> python manage.py sqlmigrate mangalib 0001    
+PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src> python manage.py sqlmigrate mangalib 0001
 BEGIN;
 --
 -- Create model Author
@@ -431,13 +431,14 @@ CREATE TABLE "mangalib_author" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
 CREATE TABLE "mangalib_book" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(32) NOT NULL UNIQUE, "quantity" integer NOT NULL, "author_id" bigint NOT NULL REFERENCES "mangalib_author" ("id") DEFERRABLE INITIALLY DEFERRED);
 CREATE INDEX "mangalib_book_author_id_bc892452" ON "mangalib_book" ("author_id");
 COMMIT;
-PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src> 
+PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src>
 ```
-le dossier `migrations` vient d'apparaitre dans le dossier de l'application.
 
+le dossier `migrations` vient d'apparaitre dans le dossier de l'application.
 
 **Pour effectuer la migration :**
 `python manage.py migrate`
+
 ```powershell
 PS D:\alpha\Documents\Programation\Django\FormationVideo_Django\FormationVideo_Django\venv\src> python manage.py migrate
 Operations to perform:
@@ -447,7 +448,9 @@ Running migrations:
 ```
 
 **Pour afficher les éléments d'une table :**
+
 - Dans le fichier `views.py` :
+
 ```python
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -457,41 +460,39 @@ from .models import Book
 def index (request):
     # je souhaite récupérer tous ce qu'il y a dans la table livre
     context = {"books": Book.objects.all()}
-    
+
     return render(request, 'mangalib/index.html', context)
 ```
+
 1. Importer le module `.models`
 2. faire une variable et lui attribuer tous les éléments d'une table.
 3. Renvoyer ses éléments en faisant comme suit :
+
 ```html
-{% load static %}
-{% load customtags %}
-{% load customBalises %}
+{% load static %} {% load customtags %} {% load customBalises %}
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mes mangas</title>
-    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}">
-    <link rel="stylesheet" href="{% static '/css/global.css' %}">
-</head>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/global.css' %}" />
+  </head>
 
-<body>
+  <body>
     <h2>Liste des livre</h2>
     <ul>
-        {% for book in books %}
-            <li>
-                {{book.title}}
-            </li>
-        {% endfor %}
+      {% for book in books %}
+      <li>{{book.title}}</li>
+      {% endfor %}
     </ul>
-</body>
-
+  </body>
 </html>
 ```
+
 4. Création d'une page par article :
+
 ```python
 from django.urls import path
 from . import views
@@ -503,8 +504,11 @@ urlpatterns = [
     path("<int:book_id>/", views.show, name="show"), # manga/<id>
 ]
 ```
+
 - Dans le fichier **urls.py**
+
 5. Modifier le fichier **views.py** :
+
 ```python
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
@@ -515,66 +519,69 @@ def show(request, book_id):
     context = {"book": get_object_or_404(Book, pk = book_id)}
     return render(request, "mangalib/show.html", context)
 ```
+
 - Je créais une méthode **show** qui renvoie tout les éléments d'un objets livre sur la page **show**.
+
 6. Je créais un template pour la page **show**
+
 ```html
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{book.title}}</title>
-    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}">
-    <link rel="stylesheet" href="{% static '/css/global.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/global.css' %}" />
+  </head>
+  <body>
     <h1>{{book.title}}</h1>
     <p>Quantité : {{book.quantity}}</p>
     <p>Auteur : {{book.author.name}}</p>
     <p>Id du livre : {{book.id}}</p>
-    <p><a href="{% url 'mangalib:index' %}">&laquo; Revenir à la liste des livres</a></p>
-</body>
+    <p>
+      <a href="{% url 'mangalib:index' %}"
+        >&laquo; Revenir à la liste des livres</a
+      >
+    </p>
+  </body>
 </html>
 ```
 
-
 ---
-
 
 ## Les gestionnaires
 
-- **SELECT * FROM mangalib_book;** -> en django `"books": Book.objects.all()`
-il est aussi possible d'utiliser la méthode `get()` -> `book = Book.objects.get(title="Nom du Livre")`
+- **SELECT \* FROM mangalib_book;** -> en django `"books": Book.objects.all()`
+  il est aussi possible d'utiliser la méthode `get()` -> `book = Book.objects.get(title="Nom du Livre")`
 
-- **SELECT * FROM mangalib_book ORDER BY title;** -> en django `"books": Book.objects.all().order_by("title")`
-Classe les titres par ordre alphabétique par défaut.
+- **SELECT \* FROM mangalib_book ORDER BY title;** -> en django `"books": Book.objects.all().order_by("title")`
+  Classe les titres par ordre alphabétique par défaut.
 
-- **SELECT * FROM mangalib_book ORDER BY title DESC;** -> en django `"books": Book.objects.all().order_by("-title")`
-Classe les titres par ordre non alphabétique (décroissant).
+- **SELECT \* FROM mangalib_book ORDER BY title DESC;** -> en django `"books": Book.objects.all().order_by("-title")`
+  Classe les titres par ordre non alphabétique (décroissant).
 
-- **SELECT * FROM mangalib_book LIMIT 5;** -> en django `"books": Book.objects.all()[:5]`
-Permet de récupéer les 5 premiers éléments d'une liste.
+- **SELECT \* FROM mangalib_book LIMIT 5;** -> en django `"books": Book.objects.all()[:5]`
+  Permet de récupéer les 5 premiers éléments d'une liste.
 
-- **SELECT * FROM mangalib_book WHERE author_id = 2;** -> en django `"books": Book.objects.all().filter(author_id = 2)`
-Permet de récupéer les livres dont l'id de l'auteur est 2, il s'agit de Virgile.
+- **SELECT \* FROM mangalib_book WHERE author_id = 2;** -> en django `"books": Book.objects.all().filter(author_id = 2)`
+  Permet de récupéer les livres dont l'id de l'auteur est 2, il s'agit de Virgile.
 
-- **SELECT * FROM mangalib_book WHERE quantity > 100;** -> en django `"books": Book.objects.all().filter(quantity__gt = 100)`
-Permet de récupéer les livres dont la quantité est supérieure à 100. `__gt` signifie : **greater than**
+- **SELECT \* FROM mangalib_book WHERE quantity > 100;** -> en django `"books": Book.objects.all().filter(quantity__gt = 100)`
+  Permet de récupéer les livres dont la quantité est supérieure à 100. `__gt` signifie : **greater than**
 
 - **`SELECT * FROM mangalib_book WHERE quantity < 100;`** -> en django `"books": Book.objects.all().filter(quantity__lt = 100)`
-Permet de récupéer les livres dont la quantité est inférieur à 100. `__lt` signifie : **less than**
+  Permet de récupéer les livres dont la quantité est inférieur à 100. `__lt` signifie : **less than**
 
-- **SELECT * FROM mangalib_book WHERE quantity >= 100;** -> en django `"books": Book.objects.all().filter(quantity__gte = 100)`
-Permet de récupéer les livres dont la quantité est supérieure ou égale à 100. `__gte` signifie : **greater than or equal to**
+- **SELECT \* FROM mangalib_book WHERE quantity >= 100;** -> en django `"books": Book.objects.all().filter(quantity__gte = 100)`
+  Permet de récupéer les livres dont la quantité est supérieure ou égale à 100. `__gte` signifie : **greater than or equal to**
 
 - **`SELECT * FROM mangalib_book WHERE quantity <= 100;`** -> en django `"books": Book.objects.all().filter(quantity__lte = 100)`
-Permet de récupéer les livres dont la quantité est inférieur ou égale à 100. `__lte` signifie : **less than or equal to**
+  Permet de récupéer les livres dont la quantité est inférieur ou égale à 100. `__lte` signifie : **less than or equal to**
 
-- **SELECT * FROM mangalib_book WHERE title LIKE 'Éthique à Nicomaque%';** -> en django `"books": Book.objects.all().filter(title__startswith = "Éthique à Nicomaque")`
-Permet de récupéer les livres dont le titre commence par : **Éthique à Nicomaque**. `__startswith` signifie : **starts with**
-
+- **SELECT \* FROM mangalib_book WHERE title LIKE 'Éthique à Nicomaque%';** -> en django `"books": Book.objects.all().filter(title__startswith = "Éthique à Nicomaque")`
+  Permet de récupéer les livres dont le titre commence par : **Éthique à Nicomaque**. `__startswith` signifie : **starts with**
 
 ### La commande INSERT
 
@@ -585,9 +592,11 @@ def add(request):
     book.save()
     return redirect("mangalib:index")
 ```
+
 - Comment ajouter un élément en base de donnée mais sans utiliser de formulaire
 
 - **Modifier :**
+
 ```python
 def edit (request):
     book = Book.objects.get(title = "Etiam si omnes Ego non !")
@@ -597,6 +606,7 @@ def edit (request):
 ```
 
 - **Supprimer :**
+
 ```python
 def remove(request):
     book = Book.objects.get(title = "Ce que tu veux")
@@ -604,8 +614,8 @@ def remove(request):
     return redirect("mangalib:index")
 ```
 
-
 **Il est nécessaire de créer des chemins dans le fichiers views**
+
 ```python
 from django.urls import path
 from . import views
@@ -623,70 +633,72 @@ urlpatterns = [
 ```
 
 **Il faut aussi créer les liens dans le template**
+
 ```html
-{% load static %}
-{% load customtags %}
-{% load customBalises %}
+{% load static %} {% load customtags %} {% load customBalises %}
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mes mangas</title>
-    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}">
-    <link rel="stylesheet" href="{% static '/css/global.css' %}">
-</head>
+    <link rel="stylesheet" href="{% static 'mangalib/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/global.css' %}" />
+  </head>
 
-<body>
+  <body>
     <p><a href="{% url 'mangalib:add' %}">ajouter un livre</a></p>
     <p><a href="{% url 'mangalib:edit' %}">modifier un livre</a></p>
     <p><a href="{% url 'mangalib:delete' %}">supprimer un livre</a></p>
-</body>
+  </body>
 </html>
 ```
 
-
 ---
-
 
 ## Administration
 
 1. Créer un super utilisateur : `python manage.py createsuperuser``
+
 ```cli
  python manage.py createsuperuser
 Nom d’utilisateur (leave blank to use 'alpha'): jonathan
 Adresse électronique: jonathan.admin@nac.fr
-Password: 
+Password:
 Password (again):
 Superuser created successfully.
 ```
 
-
 2. Aller sur l'URL suivant : `http://localhost:8000/admin/`
+
 - Entrer les identifiants pour l'administrateur.
 - Dans la partie administration je ne vois pas mes livres ni mes auteurs.
 
 3. Aller dans le fichier **admin.py** de l'application **mangalib**.
 
 4. Modifier les classes pour que dans la partie admin les métadonnées :
+
 ```python
 class Meta:
   verbose_name = "Auteur"
   verbose_name_plural = "Auteurs"
 ```
+
 - idem pour la classe **Book**.
 
 5. Modifier les classes pour avoir les noms des articles de manière explicite :
+
 ```python
 def __str__(self):
   return self.title
 ```
 
 6. Modifier le nom d'une table à l'affichage :
+
 ```python
 name = models.CharField(max_length=64, unique = True, verbose_name="Nom")
 ```
+
 - Rajouter `verbose_name="Nom"` **!**
 
 ### Pour modifier l'interface administrateur :
@@ -695,10 +707,61 @@ name = models.CharField(max_length=64, unique = True, verbose_name="Nom")
 2. voici l'url : https://github.com/django/django/tree/main/django/contrib/admin/templates
 3. Dans le la racine de notre projet (en dehors de toute application) : **créer un dossier `templates`** puis un dossier **admin**.
 4. Mettre dans ce dossier les fichiers suivants trouvables dans le dossier **admin** :
+
 - `base_site.html`
 - `index.html`
-5. Moddifier le fichier settings avec les modifications suivantes : 
+
+5. Moddifier le fichier settings avec les modifications suivantes :
+
 ```python
 'DIRS': [os.path.join(BASE_DIR, 'main/templates'),
         BASE_DIR / 'templates'],
+```
+
+---
+
+## Les formulaires
+
+1. Dans l'application **mangalib**, créer un fichier nommé **forms.py**.
+
+- Il sert à regrouper tous les formulaires d'une même application.
+
+2. Dans ce fichier j'écris cela :
+
+```python
+from django import forms
+
+class SomeForm(forms.Form):
+    username = forms.CharField(max_length=40)
+```
+
+- J'ai créé une classe **SomeForm** dans lequel j'ai créé un champ **username**.
+
+3. Je vais maintenant dans le fichier **views.py** et je vais faire appel à mon formulaire pour le renvoyer sur la page.
+
+- J'importe mon formulaire : `from .forms import SomeForm`
+- Je modifie le la méthode index pour afficher mon formulaire :
+
+```python
+def index (request):
+    if request.method == "POST":
+        form = SomeForm(request.POST)
+
+        if form.is_valid():
+            return redirect('mangalib:index')
+    else:
+        form = SomeForm()
+
+        context = {
+        "books": Book.objects.all(),
+        "form": form
+        }
+    return render(request, 'mangalib/index.html', context)
+```
+
+4. Dans mon template nommé **index.html** j'affiche mon formulaire :
+
+```html
+<h1>J'affiche mon formulaire</h1>
+<form action="post">{% csrf_token %} {{ form }}</form>
 ```

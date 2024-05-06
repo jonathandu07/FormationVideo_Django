@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 #  Ne pas oublier d'immporter notre modèle
 from .models import Book, Author
+#  Importer le module formulaire
+from .forms import SomeForm
 # Create your views here.
 
 #  Les commandes SQL et leur équivalent Django
@@ -12,10 +14,21 @@ from .models import Book, Author
 # INSERT INTO : create(), save()
 def index (request):
     # je souhaite récupérer tous ce qu'il y a dans la table livre
-    context = {
-        "books": Book.objects.all()
-        }
+    # context = {
+    #     "books": Book.objects.all()
+    #     }
+    if request.method == "POST":
+        form = SomeForm(request.POST)
+        
+        if form.is_valid():
+            return redirect('mangalib:index')
+    else:
+        form = SomeForm()
     
+        context = {
+        "books": Book.objects.all(),
+        "form": form
+        }     
     return render(request, 'mangalib/index.html', context)
 
 def show(request, book_id):

@@ -65,6 +65,13 @@
     <p><a href="{% url 'mangalib:add' %}">ajouter un livre</a></p>
     <p><a href="{% url 'mangalib:edit' %}">modifier un livre</a></p>
     <p><a href="{% url 'mangalib:delete' %}">supprimer un livre</a></p>
+
+    <h1>J'affiche mon formulaire</h1>
+    <form action="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Valider">
+    </form>
 </body>
 
 </html>
