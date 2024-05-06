@@ -8,6 +8,10 @@ class ModelA(Models.models):
 class Author(models.Model):
     name = models.CharField(max_length=64, unique = True)
     
+    # pour la traduction modifier les métadonnées
+    class Meta:
+        verbose_name = "Auteur"
+        verbose_name_plural = "Auteurs"
     
 class Book(models.Model):
     title = models.CharField(max_length=32, unique = True)
@@ -15,5 +19,7 @@ class Book(models.Model):
     # Première relation 
     author = models.ForeignKey(Author, on_delete=models.DO_NOTHING)
     
-    
+    class Meta:
+        verbose_name = "Livre"
+        verbose_name_plural = "Livres"
     
