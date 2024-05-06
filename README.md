@@ -688,3 +688,17 @@ def __str__(self):
 name = models.CharField(max_length=64, unique = True, verbose_name="Nom")
 ```
 - Rajouter `verbose_name="Nom"` **!**
+
+### Pour modifier l'interface administrateur :
+
+1. Récupérer sur le code source de Django, les dossiers suivants : **Admin** et **registration**.
+2. voici l'url : https://github.com/django/django/tree/main/django/contrib/admin/templates
+3. Dans le la racine de notre projet (en dehors de toute application) : **créer un dossier `templates`** puis un dossier **admin**.
+4. Mettre dans ce dossier les fichiers suivants trouvables dans le dossier **admin** :
+- `base_site.html`
+- `index.html`
+5. Moddifier le fichier settings avec les modifications suivantes : 
+```python
+'DIRS': [os.path.join(BASE_DIR, 'main/templates'),
+        BASE_DIR / 'templates'],
+```
