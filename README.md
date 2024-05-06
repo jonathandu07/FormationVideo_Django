@@ -668,3 +668,23 @@ Superuser created successfully.
 - Dans la partie administration je ne vois pas mes livres ni mes auteurs.
 
 3. Aller dans le fichier **admin.py** de l'application **mangalib**.
+
+4. Modifier les classes pour que dans la partie admin les métadonnées :
+```python
+class Meta:
+  verbose_name = "Auteur"
+  verbose_name_plural = "Auteurs"
+```
+- idem pour la classe **Book**.
+
+5. Modifier les classes pour avoir les noms des articles de manière explicite :
+```python
+def __str__(self):
+  return self.title
+```
+
+6. Modifier le nom d'une table à l'affichage :
+```python
+name = models.CharField(max_length=64, unique = True, verbose_name="Nom")
+```
+- Rajouter `verbose_name="Nom"` **!**
