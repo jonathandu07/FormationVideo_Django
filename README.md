@@ -645,3 +645,26 @@ urlpatterns = [
 </body>
 </html>
 ```
+
+
+---
+
+
+## Administration
+
+1. Créer un super utilisateur : `python manage.py createsuperuser``
+```cli
+ python manage.py createsuperuser
+Nom d’utilisateur (leave blank to use 'alpha'): jonathan
+Adresse électronique: jonathan.admin@nac.fr
+Password: 
+Password (again):
+Superuser created successfully.
+```
+
+
+2. Aller sur l'URL suivant : `http://localhost:8000/admin/`
+- Entrer les identifiants pour l'administrateur.
+- Dans la partie administration je ne vois pas mes livres ni mes auteurs.
+
+3. Aller dans le fichier **admin.py** de l'application **mangalib**.

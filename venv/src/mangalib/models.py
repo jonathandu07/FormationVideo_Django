@@ -1,5 +1,9 @@
 from django.db import models
 
+"""
+class ModelA(Models.models):
+    field = models.ManyToManyField(model) 
+"""
 # Create your models here.
 class Author(models.Model):
     name = models.CharField(max_length=64, unique = True)
