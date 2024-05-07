@@ -3,7 +3,7 @@ from django.http import HttpResponse
 #  Ne pas oublier d'immporter notre modèle
 from .models import Book, Author
 #  Importer le module formulaire
-from .forms import SomeForm
+# from .forms import SomeForm
 # Create your views here.
 
 #  Les commandes SQL et leur équivalent Django
@@ -14,21 +14,9 @@ from .forms import SomeForm
 # INSERT INTO : create(), save()
 def index (request):
     # je souhaite récupérer tous ce qu'il y a dans la table livre
-    # context = {
-    #     "books": Book.objects.all()
-    #     }
-    if request.method == "POST":
-        form = SomeForm(request.POST)
-        
-        if form.is_valid():
-            return redirect('mangalib:index')
-    else:
-        form = SomeForm()
-    
-        context = {
-        "books": Book.objects.all(),
-        "form": form
-        }     
+    context = {
+        "books": Book.objects.all()
+        }   
     return render(request, 'mangalib/index.html', context)
 
 def show(request, book_id):
@@ -42,13 +30,13 @@ def add(request):
     book.save()
     return redirect("mangalib:index")
 
-def edit(request):
-    book = Book.objects.get(title = "Ce que tu veux")
+def edit(request, book_id):
+    book = Book.objects.get(pk = book_id)
     book.title = "Meditationes"
     book.save()
     return redirect("mangalib:index")
 
-def remove(request):
-    book = Book.objects.get(title = "Ce que tu veux")
+def remove(request, book_id):
+    book = Book.objects.get(pk = book_id)
     book.delete()
     return redirect("mangalib:index")

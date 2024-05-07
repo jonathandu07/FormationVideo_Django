@@ -791,3 +791,12 @@ class SomeForm(forms.Form):
     colors = [('1', 'rouge'), ('2', 'bleu'), ('3', 'blanc'), ('4', 'vert')]
     color = forms.ChoiceField(choices=colors, label="Couleurs", widget=forms.RadioSelect)
 ```
+
+8. Les menus déroulans :
+```python
+from django import forms
+
+class SomeForm(forms.Form):
+    countries = [('1', 'France'), ('2', 'Suisse'), ('3', 'Espagne'), ('4', 'Italie')]
+    country = forms.ChoiceField(choices=countries, label="Pays")
+```
