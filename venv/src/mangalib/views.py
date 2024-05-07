@@ -3,7 +3,7 @@ from django.http import HttpResponse
 #  Ne pas oublier d'immporter notre modèle
 from .models import Book, Author
 #  Importer le module formulaire
-# from .forms import SomeForm
+from .forms import BookForm
 # Create your views here.
 
 #  Les commandes SQL et leur équivalent Django
@@ -25,10 +25,16 @@ def show(request, book_id):
 
 
 def add(request):
-    author = Author.objects.get(name="Virgil")
-    book = Book.objects.create(title = "De Republica", quantity =50 , author = author)
-    book.save()
-    return redirect("mangalib:index")
+    if request.method == "POST":
+        form = BookForm(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            return redirect("mangalib:index")
+    else:
+        form = BookForm()
+    return render(request, 'mangalib/book-form.html', {"form": form})
+
 
 def edit(request, book_id):
     book = Book.objects.get(pk = book_id)
