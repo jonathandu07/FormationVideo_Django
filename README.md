@@ -837,3 +837,17 @@ class UserRegistrationForm(forms.Form):
         if password != confirm_password:
             raise forms.ValidationError("Les mots de passe ne correspondent pas.")
 ```
+
+### Validation personnalisée globale
+
+```python
+    def clean(self):
+        title = self.cleaned_data.get("title")
+        quantity = self.cleaned_data.get("quantity")
+
+        if title and quantity:
+            if title.startswith("Mein Kampf") and quantity == 666:
+                raise forms.ValidationError("Données enrtrées non autorisées.")
+
+        return self.cleaned_data
+```

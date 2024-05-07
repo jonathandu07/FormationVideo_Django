@@ -18,3 +18,13 @@ class BookForm(forms.ModelForm):
             raise forms.ValidationError("La quantité doit être compris entre 1 et 100")
         
         return quantity
+    
+    def clean(self):
+        title = self.cleaned_data.get("title")
+        quantity = self.cleaned_data.get("quantity")
+        
+        if title and quantity:
+            if title.startswith("Mein Kampf") and quantity == 666:
+                raise forms.ValidationError("Données enrtrées non autorisées.")
+            
+        return self.cleaned_data   
