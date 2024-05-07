@@ -33,6 +33,7 @@ def add(request):
             return redirect("mangalib:index")
     else:
         form = BookForm()
+        
     return render(request, 'mangalib/book-form.html', {"form": form})
 
 

@@ -67,7 +67,6 @@
                 <td>{{ book.quantity}}</td>
                 <td><a href="{% url 'mangalib:delete' book.id %}">❌</a></td>
                 <td><a href="{% url 'mangalib:edit' book.id %}">🖉</a></td>
-                
             </tr>
         {% endfor %}
     </table>
