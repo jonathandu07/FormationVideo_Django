@@ -51,7 +51,8 @@
     <h2>Balise personnalisée</h2>
     <p>{% hello_world %}</p>
 
-    <p>-----------------------------------------------------------------------------------------------------------------</p>
+    <p>-----------------------------------------------------------------------------------------------------------------
+    </p>
     <p><a href="{% url 'mangalib:add' %}">ajouter un livre</a></p>
     <table>
         <tr>
@@ -61,22 +62,24 @@
             <th colspan="2">ACTIONS</th>
         </tr>
         {% for book in books %}
-            <tr>
-                <td><a href="{% url 'mangalib:show' book.id %}">{{book.title}}</a></td>
-                <td>{{ book.author}}</td>
-                <td>{{ book.quantity}}</td>
-                <td><a href="{% url 'mangalib:delete' book.id %}">❌</a></td>
-                <td><a href="{% url 'mangalib:edit' book.id %}">🖉</a></td>
-            </tr>
+        <tr>
+            <td><a href="{% url 'mangalib:show' book.id %}">{{book.title}}</a></td>
+            <td>{{ book.author}}</td>
+            <td>{{ book.quantity}}</td>
+            <td><a href="{% url 'mangalib:delete' book.id %}">❌</a></td>
+            <td><a href="{% url 'mangalib:edit' book.id %}">🖉</a></td>
+        </tr>
         {% endfor %}
     </table>
 
-    {# <h1>J'affiche mon formulaire</h1>
+    {% comment %}
+    <h1>J'affiche mon formulaire</h1>
     <form action="POST">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Valider">
-    </form> #}
+    </form>
+    {% endcomment %}
 </body>
 
 </html>

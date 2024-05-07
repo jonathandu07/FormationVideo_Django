@@ -39,9 +39,16 @@ def add(request):
 
 def edit(request, book_id):
     book = Book.objects.get(pk = book_id)
-    book.title = "Meditationes"
-    book.save()
-    return redirect("mangalib:index")
+    if request.method == "POST":
+        form = BookForm(request.POST, instance = book)
+        
+        if form.is_valid():
+            form.save()
+            return redirect("mangalib:index")
+    else:
+        form = BookForm( instance = book)
+        
+    return render(request, 'mangalib/book-form.html', {"form": form})
 
 def remove(request, book_id):
     book = Book.objects.get(pk = book_id)
