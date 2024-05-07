@@ -765,3 +765,29 @@ def index (request):
 <h1>J'affiche mon formulaire</h1>
 <form action="post">{% csrf_token %} {{ form }}</form>
 ```
+
+5. Pour un champs où je rentre un mot de passe, j'écris la chose suivante :
+
+```python
+password = forms.CharField(label= "Mot de passe", widget=forms.PasswordInput)
+```
+
+- L'utilisation de `widget=forms.PasswordInput` garantit que le champ de mot de passe dans le formulaire est rendu de manière sécurisée, masquant les caractères saisis par l'utilisateur pour protéger la confidentialité du mot de passe.
+
+6. Comment faire un formulaire de choix multiple :
+
+```python
+    langages = [('en', 'en'), ('fr', 'fr'), ('es', 'es'), ('pt-BR', 'pt-BR'),]
+    # champs de formulaire
+    langage = forms.MultipleChoiceField(label = "Langues", widget=forms.CheckboxSelectMultiple, choices=langages)
+```
+
+7. Les bouttons radio :
+
+```python
+from django import forms
+
+class SomeForm(forms.Form):
+    colors = [('1', 'rouge'), ('2', 'bleu'), ('3', 'blanc'), ('4', 'vert')]
+    color = forms.ChoiceField(choices=colors, label="Couleurs", widget=forms.RadioSelect)
+```
