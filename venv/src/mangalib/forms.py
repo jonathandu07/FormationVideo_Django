@@ -8,3 +8,13 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ['title', 'author', 'quantity']
         lables = {'titles': 'Titre', 'quantity': 'Quantité'}
+        
+    
+    # Méthode pour vérifier le champs quantité
+    def clean_quantity(self):
+        quantity = self.cleaned_data["quantity"]
+        
+        if quantity <= 0 or quantity > 100:
+            raise forms.ValidationError("La quantité doit être compris entre 1 et 100")
+        
+        return quantity

@@ -793,10 +793,47 @@ class SomeForm(forms.Form):
 ```
 
 8. Les menus déroulans :
+
 ```python
 from django import forms
 
 class SomeForm(forms.Form):
     countries = [('1', 'France'), ('2', 'Suisse'), ('3', 'Espagne'), ('4', 'Italie')]
     country = forms.ChoiceField(choices=countries, label="Pays")
+```
+
+### Validation d'un champ spécifique :
+
+1. Aller dans **forms.py** :
+
+```python
+    def clean_quantity(self):
+        quantity = self.cleaned_data["quantity"]
+
+        if quantity <= 0 or quantity > 100:
+            raise forms.ValidationError("La quantité doit être compris entre 1 et 100")
+
+        return quantity
+```
+
+2. Pour demander une double validation de mot de passe :
+
+```python
+# Dans forms.py
+from django import forms
+from django.contrib.auth.models import User
+
+class UserRegistrationForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password != confirm_password:
+            raise forms.ValidationError("Les mots de passe ne correspondent pas.")
 ```
