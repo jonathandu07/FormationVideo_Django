@@ -851,3 +851,12 @@ class UserRegistrationForm(forms.Form):
 
         return self.cleaned_data
 ```
+
+
+---
+
+
+## Authentication
+
+1. Créer une nouvelle application d'authentication.
+`python manage.py startapp accounts` -> l'application d'authentification se nommera donc **Accounts**.
