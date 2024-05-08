@@ -906,6 +906,19 @@ INSTALLED_APPS = [
 </p>
 {% endif %}
 ```
+
 - En haut de la balise **body**.
 
 6. Mettre à jour le fichier **urls.py** se trouvant dans l'application **accounts**.
+
+```python
+from django.urls import path
+from . import views
+app_name = "accounts"
+
+urlpatterns = [
+    path('login/', views.login_user, name='login'),
+    path('logout/', views.logout_user, name='logout'),
+    path('register/', views.register_user, name='register'),
+]
+```
