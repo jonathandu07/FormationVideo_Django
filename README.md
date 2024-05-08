@@ -852,11 +852,60 @@ class UserRegistrationForm(forms.Form):
         return self.cleaned_data
 ```
 
-
 ---
-
 
 ## Authentication
 
 1. Créer une nouvelle application d'authentication.
-`python manage.py startapp accounts` -> l'application d'authentification se nommera donc **Accounts**.
+   `python manage.py startapp accounts` -> l'application d'authentification se nommera donc **Accounts**.
+
+2. Dans l'application **accounts**, je créais le fichier **urls.py** dans lequel je met les lignes suivantes :
+
+```python
+from django.urls import path
+from . import views
+app_name = "accounts"
+
+urlpatterns = [
+
+]
+```
+
+3. Dans le fichier **urls.py** du dossier **main** j'ajoute la ligne suivante : `path('accounts/', include("accounts.urls")),`
+
+4. Dans le fichier **settings.py** j'ajoute mon application :
+
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # Mes applications
+    'mangalib',
+    'accounts'
+]
+```
+
+5. Modifier le fichier templates qui se trouve dans l'application **mangalib** et il s'agit du fichier **index.html**.
+
+- Y apporter les modifications suivantes :
+
+```html
+{% if user.is_authenticated %}
+<p>
+  Connecté sous {{user.username}} |
+  <a href="{% url 'accounts:logout_user' %}">Déconnexion</a>
+</p>
+{% else %}
+<p>
+  <a href="{% url 'accounts:register_user' %}">Connexion</a> |
+  <a href="{% url 'accounts:logout_user' %}">Inscription</a>
+</p>
+{% endif %}
+```
+- En haut de la balise **body**.
+
+6. Mettre à jour le fichier **urls.py** se trouvant dans l'application **accounts**.

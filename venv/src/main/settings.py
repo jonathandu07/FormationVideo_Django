@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Mes applications
-    'mangalib'
+    'mangalib',
+    'accounts'
 ]
 
 MIDDLEWARE = [

@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name="accueil"), 
     path('manga/', include('mangalib.urls')),
+    path('accounts/', include("accounts.urls")),
 ]
