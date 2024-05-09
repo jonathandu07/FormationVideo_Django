@@ -1051,14 +1051,95 @@ def show(request, book_id):
 2. Y ajouter la chose suivante :
 
 ```html
-{% if perms.mangalib.delete_book %}<p>Oui tu peux supprimer un livre</p>{% endif %}
-
+{% if perms.mangalib.delete_book %}
+<p>Oui tu peux supprimer un livre</p>
+{% endif %}
 ```
-
 
 ### Les groupes
 
 1.  Aller sur l'URL suivant : `http://127.0.0.1:8000/admin/`
-2. Créer un groupe
+2.  Créer un groupe
+
+### les permissions
+
+1. Aller dans **models.py** de l'application **mangalib**.
+2. Modifer la classe **Meta** qui se trouve dans la classe **Book** :
+
+```python
+    class Meta:
+        verbose_name = "Livre"
+        verbose_name_plural = "Livres"
+        permissions = [
+            ('apply_promo_code', 'Peut appliquer des réductions'),
+        ]
+```
+
+3. Faire une migration : `python manage.py makemigrations`
+
+- Résultat :
+
+```powershell
+Migrations for 'mangalib':
+  mangalib\migrations\0002_alter_author_options_alter_book_options_and_more.py
+    - Change Meta options on author
+    - Change Meta options on book
+    - Alter field name on author
+    - Alter field author on book
+    - Alter field quantity on book
+    - Alter field title on book
+```
+
+4. Ne pas oublier de faire : `python manage.py migrate`
+
+```powershell
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, mangalib, sessions
+Running migrations:
+  Applying mangalib.0002_alter_author_options_alter_book_options_and_more... OK
+```
+
+- Ne pas hésiter à redémarrer le serveur avec la commande suivante : `python manage.py runserver`
+
+5. Aller sur l'utl suivant : `http://127.0.0.1:8000/admin/auth/user/`
+   Prendre un utilisateur au choix puis aller dans la rubrique **Permission**. Notre permission existe maintenant !
+
+### Accès restreint à un groupe
+
+1. Aller dans le fichier **views.py** de l'application **mangalib**.
+
+2. Se créer une méthode nommée **is_visitor** qui renvoie un bouléen :
+
+```python
+def is_visitors(user):
+    return user.groups.filter(name = 'Visiteur').exists()
+```
+
+3. Importer le décorateur suivant : `user_passes_test`
+
+```python
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
+```
+
+4. Ajouter le décorateur à la méthode **show** :
+
+```python
+@user_passes_test(is_visitors)
+def show(request, book_id):
+    context = {"book": get_object_or_404(Book, pk = book_id),}
+    return render(request, "mangalib/show.html", context)
+```
+- Je met en argument la méthode **is_visitors**.
+
+
+### Complément :
+- **Django Guardian** : Permet d'augmenter le systeme de permissions déjà présent dans Django.
+- **Rusles** : Permet la même chose que Guardian.
+
+
+---
+
+
+## Faire des tests
 
 
