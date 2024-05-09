@@ -1054,3 +1054,11 @@ def show(request, book_id):
 {% if perms.mangalib.delete_book %}<p>Oui tu peux supprimer un livre</p>{% endif %}
 
 ```
+
+
+### Les groupes
+
+1.  Aller sur l'URL suivant : `http://127.0.0.1:8000/admin/`
+2. Créer un groupe
+
+

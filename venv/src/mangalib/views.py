@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 #  LIMIT : [:N]
 # INSERT INTO : create(), save()
 
+
 def index (request):
     # je souhaite récupérer tous ce qu'il y a dans la table livre
     context = {
@@ -21,12 +22,12 @@ def index (request):
         }   
     return render(request, 'mangalib/index.html', context)
 
-@permission_required('mangalib.delete_book') # <app_name>.<action>_<model_name>
+@permission_required('mangalib.view_book', raise_exception=True) # <app_name>.<action>_<model_name>
 def show(request, book_id):
     context = {"book": get_object_or_404(Book, pk = book_id),}
     return render(request, "mangalib/show.html", context)
 
-
+@permission_required('mangalib.add_book', raise_exception=True) # <app_name>.<action>_<model_name>
 def add(request):
     if request.method == "POST":
         form = BookForm(request.POST)
@@ -39,7 +40,7 @@ def add(request):
         
     return render(request, 'mangalib/book-form.html', {"form": form})
 
-
+@permission_required('mangalib.change_book', raise_exception=True) # <app_name>.<action>_<model_name>
 def edit(request, book_id):
     book = Book.objects.get(pk = book_id)
     if request.method == "POST":
@@ -53,6 +54,7 @@ def edit(request, book_id):
         
     return render(request, 'mangalib/book-form.html', {"form": form})
 
+@permission_required('mangalib.delete_book', raise_exception=True) # <app_name>.<action>_<model_name>
 def remove(request, book_id):
     book = Book.objects.get(pk = book_id)
     book.delete()
@@ -67,4 +69,10 @@ user.has_perm()
     .remove(<perm2<, ...)
     .clear()
     .set([])
+"""
+
+# Méthodes sur  les groiupes
+
+"""
+user.groups.set([gr1, gr2])
 """
