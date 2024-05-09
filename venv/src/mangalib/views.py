@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .models import Book, Author
 #  Importer le module formulaire
 from .forms import BookForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 #  Les commandes SQL et leur équivalent Django
@@ -12,6 +13,7 @@ from .forms import BookForm
 #  ORDER BY (en SQL) : order_by()
 #  LIMIT : [:N]
 # INSERT INTO : create(), save()
+
 def index (request):
     # je souhaite récupérer tous ce qu'il y a dans la table livre
     context = {
@@ -19,6 +21,7 @@ def index (request):
         }   
     return render(request, 'mangalib/index.html', context)
 
+@login_required
 def show(request, book_id):
     context = {"book": get_object_or_404(Book, pk = book_id),}
     return render(request, "mangalib/show.html", context)

@@ -964,8 +964,8 @@ def login_user(request):
 </form>
 ```
 
-
 9. Remplir le fichier **views.py** qui se trouve dans l'application **accounts** : affin de pouvoir créer un compte
+
 ```python
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -976,36 +976,45 @@ from django.contrib import messages
 def register_user(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
-        
+
         if form.is_valid():
             form.save()
             return redirect("mangalib:index")
     else:
         form = UserCreationForm()
-        
+
     return render(request, "accounts/register.html", {"form":form})
 ```
-
 
 10. Créer le fichier **register.html** :
 
 ```html
-<h1>
-    Inscription
-</h1>
+<h1>Inscription</h1>
 {% for message in messages %}
 <p>{{message}}</p>
 {% endfor %}
 
 <form method="post">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value="Valider">
+  {% csrf_token %} {{form}}
+  <input type="submit" value="Valider" />
 </form>
 ```
 
-
 ---
 
-
 ## Permissions et groupes
+
+### bloquer une vue si l'utilisateur n'est pas connecté :
+
+1. Aller dans le fichier **views.py** de l'application **mangalib**.
+
+2. Importer ce dont j'ai besoin : `from django.contrib.auth.decorators import login_required`
+
+3. Puis ajouter au dessus de la vue souhaité le décorateur **login_required** :
+```python
+@login_required
+def show(request, book_id):
+    context = {"book": get_object_or_404(Book, pk = book_id),}
+    return render(request, "mangalib/show.html", context)
+```
+- Pour voir les spécifités d'un livre il faut maintenant se connecter.
