@@ -8,6 +8,7 @@ def login_user(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST["password"]
+        
         user = authenticate(request, username = username, password = password)
         
         if user is not None:
@@ -15,7 +16,7 @@ def login_user(request):
             return redirect("mangalib:index")
         
         else:
-            message.info(request, "Identifiant ou mot de passe incorrecte")
+            messages.info(request, "Identifiant ou mot de passe incorrecte")
 
     form = AuthenticationForm()
     return render(request, "accounts/login.html", {"form":form})
@@ -26,4 +27,13 @@ def logout_user(request):
     return redirect("mangalib:index")
 
 def register_user(request):
-    pass
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            return redirect("mangalib:index")
+    else:
+        form = UserCreationForm()
+        
+    return render(request, "accounts/register.html", {"form":form})

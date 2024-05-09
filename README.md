@@ -923,7 +923,7 @@ urlpatterns = [
 ]
 ```
 
-7. Remplir le fichier **views.py** qui se trouve dans l'application **accounts** :
+7. Remplir le fichier **views.py** qui se trouve dans l'application **accounts** : affin de pouvoir se connecter
 
 ```python
 from django.shortcuts import render, redirect
@@ -936,6 +936,7 @@ def login_user(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST["password"]
+
         user = authenticate(request, username = username, password = password)
 
         if user is not None:
@@ -943,16 +944,68 @@ def login_user(request):
             return redirect("mangalib:index")
 
         else:
-            message.info(request, "Identifiant ou mot de passe incorrecte")
+            messages.info(request, "Identifiant ou mot de passe incorrecte")
 
     form = AuthenticationForm()
     return render(request, "accounts/login.html", {"form":form})
+```
+
+8. Créer le fichier **login.html** :
+
+```html
+<h1>Connexion</h1>
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+
+<form method="post">
+  {% csrf_token %} {{form}}
+  <input type="submit" value="Valider" />
+</form>
+```
 
 
-def logout_user(request):
-    logout(request)
-    return redirect("mangalib:index")
+9. Remplir le fichier **views.py** qui se trouve dans l'application **accounts** : affin de pouvoir créer un compte
+```python
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+# Create your views here.
 
 def register_user(request):
-    pass
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            return redirect("mangalib:index")
+    else:
+        form = UserCreationForm()
+        
+    return render(request, "accounts/register.html", {"form":form})
 ```
+
+
+10. Créer le fichier **register.html** :
+
+```html
+<h1>
+    Inscription
+</h1>
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+
+<form method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Valider">
+</form>
+```
+
+
+---
+
+
+## Permissions et groupes
