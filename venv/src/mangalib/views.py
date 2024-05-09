@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import Book, Author
 #  Importer le module formulaire
 from .forms import BookForm
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 # Create your views here.
 
 #  Les commandes SQL et leur équivalent Django
@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 #  LIMIT : [:N]
 # INSERT INTO : create(), save()
 
+def is_visitors(user):
+    return user.groups.filter(name = 'Visiteur').exists()
 
 def index (request):
     # je souhaite récupérer tous ce qu'il y a dans la table livre
@@ -22,7 +24,7 @@ def index (request):
         }   
     return render(request, 'mangalib/index.html', context)
 
-@permission_required('mangalib.view_book', raise_exception=True) # <app_name>.<action>_<model_name>
+@user_passes_test(is_visitors)
 def show(request, book_id):
     context = {"book": get_object_or_404(Book, pk = book_id),}
     return render(request, "mangalib/show.html", context)
