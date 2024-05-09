@@ -1011,10 +1011,46 @@ def register_user(request):
 2. Importer ce dont j'ai besoin : `from django.contrib.auth.decorators import login_required`
 
 3. Puis ajouter au dessus de la vue souhaité le décorateur **login_required** :
+
 ```python
 @login_required
 def show(request, book_id):
     context = {"book": get_object_or_404(Book, pk = book_id),}
     return render(request, "mangalib/show.html", context)
 ```
+
 - Pour voir les spécifités d'un livre il faut maintenant se connecter.
+
+### Accès restreint selon des permissions :
+
+1. Aller dans le fichier **views.py** de l'application **mangalib**.
+
+2. Importer ce dont j'ai besoin : `from django.contrib.auth.decorators import permission_required`
+
+3. Puis ajouter au dessus de la vue souhaité le décorateur **login_required** :
+
+```python
+@permission_required('mangalib.delete_book') # <app_name>.<action>_<model_name>
+def show(request, book_id):
+    context = {"book": get_object_or_404(Book, pk = book_id),}
+    return render(request, "mangalib/show.html", context)
+```
+
+- Pour voir les spécifités d'un livre il faut maintenant se connecter et avoir les permissions suffisantes. SI je me connecte avec un compte qui n'est pas le super utilisateur, je suis déconnecté.
+
+4. Pour lever une permission ajouter `raise_exeption` :
+
+```python
+@permission_required('mangalib.delete_book', raise_exception=True)
+```
+
+### Permission dans le gabari
+
+1. Aller dans le fichier **index.html** de l'application **mangalib**.
+
+2. Y ajouter la chose suivante :
+
+```html
+{% if perms.mangalib.delete_book %}<p>Oui tu peux supprimer un livre</p>{% endif %}
+
+```

@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import Book, Author
 #  Importer le module formulaire
 from .forms import BookForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 
 #  Les commandes SQL et leur équivalent Django
@@ -21,7 +21,7 @@ def index (request):
         }   
     return render(request, 'mangalib/index.html', context)
 
-@login_required
+@permission_required('mangalib.delete_book') # <app_name>.<action>_<model_name>
 def show(request, book_id):
     context = {"book": get_object_or_404(Book, pk = book_id),}
     return render(request, "mangalib/show.html", context)
@@ -57,3 +57,14 @@ def remove(request, book_id):
     book = Book.objects.get(pk = book_id)
     book.delete()
     return redirect("mangalib:index")
+
+
+# Quand on ne peut pas utiliser les décorrateur voici une méthode alternative :
+"""
+user.has_perm()
+    .all()
+    .add(<perm1<, ...)
+    .remove(<perm2<, ...)
+    .clear()
+    .set([])
+"""
