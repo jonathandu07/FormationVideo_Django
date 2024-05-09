@@ -29,4 +29,7 @@ class Book(models.Model):
     class Meta:
         verbose_name = "Livre"
         verbose_name_plural = "Livres"
+        permissions = [
+            ('apply_promo_code', 'Peut appliquer des réductions'),
+        ]
     
