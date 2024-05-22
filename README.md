@@ -1129,17 +1129,61 @@ def show(request, book_id):
     context = {"book": get_object_or_404(Book, pk = book_id),}
     return render(request, "mangalib/show.html", context)
 ```
+
 - Je met en argument la méthode **is_visitors**.
 
-
 ### Complément :
+
 - **Django Guardian** : Permet d'augmenter le systeme de permissions déjà présent dans Django.
 - **Rusles** : Permet la même chose que Guardian.
 
-
 ---
-
 
 ## Faire des tests
 
+1. Ouvir le terminal : `python manage.py test`
 
+- Résultat :
+
+```powershell
+Found 0 test(s).
+System check identified no issues (0 silenced).
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+OK
+```
+
+- Aucun test n'a été effectué.
+
+2. Je rempli le fichier **tests.py** qui se trouve dans l'application **mangalib** :
+
+```python
+from django.test import TestCase
+from .models import Author
+
+# Create your tests here.
+class AuthorTestCase(TestCase):
+    def setUp(self):
+        self.author = Author.objects.create(name="Athanase Alcide")
+
+    def test_iscorrect_instance(self):
+        self.assertIsInstance(self.author, Author)
+```
+
+3. Je lance un nouveau test avec la commande suivante : `python manage.py test`
+- Résultat :
+
+```powershell
+Found 1 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default'...
+```
+- Le test est un  succès !

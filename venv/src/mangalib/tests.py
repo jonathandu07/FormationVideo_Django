@@ -8,3 +8,7 @@ class AuthorTestCase(TestCase):
     
     def test_iscorrect_instance(self):
         self.assertIsInstance(self.author, Author)
+        
+    def test_exist(self):
+        author = Author.objects.create(pk= 1)
+        self.asserTrue(author)
